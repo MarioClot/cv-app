@@ -1,23 +1,21 @@
 <template>
-    <div class="login">
+    <div class="sign-up">
         <div class="content">
-            <div class="login-card">
-                <div class="login-container">
+            <div class="sign-up-card">
+                <div class="sign-up-container">
                     <div class="title">
-                        <p>Sign In With</p>
+                        <p>Sign Up</p>
                     </div>
-                    <div class="login-form">
+                    <div class="sign-up-form">
                         <generic-form>
                             <generic-input v-model="email" placeholder="Email" type="mail"
                                            label="Mail" :error="false"></generic-input>
                             <generic-input v-model="password" placeholder="Password" type="password"
                                            label="Password" :error="false"></generic-input>
-                            <div class="social-login">
-                                <generic-button icon="facebook" type="white">Facebook</generic-button>
-                                <generic-button icon="google" type="white">Google</generic-button>
-                            </div>
+                            <generic-input v-model="repeatPassword" placeholder="Repeat password" type="password"
+                                           label="Repeat password" :error="false"></generic-input>
                             <div class="login-button">
-                                <generic-button :on-click="() => login(email, password)">Sign in</generic-button>
+                                <generic-button :on-click="() => signUp({email, password, repeatPassword})">Sign in</generic-button>
                             </div>
                         </generic-form>
                     </div>
@@ -39,12 +37,13 @@
         data: () => {
             return {
                 email: '',
-                password: ''
+                password: '',
+                repeatPassword: ''
             }
         },
         methods: {
             ...mapActions({
-                login: 'oauth/login'
+                signUp: 'oauth/signUp'
             }),
         }
     }
@@ -52,7 +51,7 @@
 
 <style scoped lang="scss">
 
-    .login {
+    .sign-up {
         display: grid;
         height: 100vh;
         grid-template-columns: repeat(3, 1fr);
@@ -60,7 +59,7 @@
         grid-template-areas: ". . ." ". content ." ". . .";
     }
 
-    .login-container {
+    .sign-up-container {
         border-radius: 8px;
         box-shadow: 0 0 5px 2px rgba(152, 152, 174, 0.5);
         background: rgba(255, 255, 255, 0.5);
@@ -78,7 +77,7 @@
         width: 100%;
     }
 
-    .login-form {
+    .sign-up-form {
         margin: 50px 30px 0;
         position: relative;
     }
@@ -87,7 +86,7 @@
         grid-area: content;
     }
 
-    .login-button {
+    .sign-up-button {
         margin-top: 30px;
         display: flex;
         justify-content: center;
@@ -114,14 +113,6 @@
         bottom: 80px;
         font-size: 12px;
         color: #fa4c64;
-    }
-
-    .social-login {
-        display: flex;
-
-        & .button {
-            margin: 10px;
-        }
     }
 
     .button {

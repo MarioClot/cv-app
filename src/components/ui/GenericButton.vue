@@ -28,7 +28,6 @@
         computed: {
             getType: {
                 get() {
-                    console.log(this);
                     const styleClass = [`is-${this.type}`];
                     if (this.$props.isLoading) {
                         styleClass.push('is-loading');
@@ -58,6 +57,7 @@
         margin-right: 16px;
         text-align: center;
         box-shadow: 0 0 5px 2px rgba(152, 152, 174, 0.5);
+        cursor: pointer;
 
         &.is-primary {
             background: #47475c;

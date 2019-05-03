@@ -53,7 +53,6 @@
                     ...this.$listeners,
                     focus: () => {
                         this.oldValue = this.$props.value;
-                        console.log(this.oldValue + ' ' + this.$props.value);
                         this.focus = true;
                         this.haveNewValue = false;
                     },
