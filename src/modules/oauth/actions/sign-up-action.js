@@ -4,7 +4,6 @@ export const signUpAction = ({service}) => (email, password, repeatPassword) => 
     if (password !== repeatPassword) {
         throw new Error('Passwords not match');
     }
-    console.log(service);
     return service.signUp(email, password);
 };
 

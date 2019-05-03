@@ -2,6 +2,7 @@ import IFirebase from "./IFirebase";
 import firebase from "firebase";
 import {injectable} from "inversify";
 import 'reflect-metadata';
+import {User} from "../../modules/oauth/entity/user";
 
 @injectable()
 class Firebase extends IFirebase {
@@ -17,20 +18,26 @@ Firebase.prototype = Object.create(IFirebase.prototype, {
 });
 
 Firebase.prototype.login = function(email, password) {
-    return this.prototype.firebaseInstance.auth().signInWithEmailAndPassword(email, password).then((result, error) => {
-        if (error) {
-            throw new Error('Firebase error');
-        }
-        return result;
+    return this.firebaseInstance.auth().signInWithEmailAndPassword(email, password).then((result) => {
+        return new User(result.user.uid, result.user.email);
+    }, (error) => {
+        throw new Error( error.code );
     });
 };
 
 Firebase.prototype.signUp = function(email, password) {
-    console.log(this);
     return this.firebaseInstance.auth().createUserWithEmailAndPassword(email, password).then((result) => {
-        return result;
+        return new User(result.user.uid, result.user.email);
     }, (error) => {
-        throw new Error('Firebase error: '+error )
+        throw new Error( error.code );
+    });
+};
+
+Firebase.prototype.loginWithGoogle = function() {
+    return this.firebaseInstance.auth().signInWithPopup(new firebase.auth.GoogleAuthProvider()).then((result) => {
+        return new User(result.user.uid, result.user.email, result.user.displayName);
+    }, (error) => {
+        throw new Error( error.code );
     });
 };
 

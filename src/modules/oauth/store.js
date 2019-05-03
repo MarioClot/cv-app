@@ -1,29 +1,51 @@
 import signUpAction from "./actions/sign-up-action";
+import loginAction from "./actions/login-action";
+import router from "../../router";
+import loginWithGoogleAction from "./actions/login-with-google-action";
 
 export const oauth = {
     namespaced: true,
     state: {
-        token: '',
-        error: {}
+        error: Error,
+        user: {}
     },
     mutations: {
-        saveToken: (state, payload) => {
-            state.token = payload.token;
-            console.log('saveToken');
-        },
         saveError: (state, payload) => {
-            state.error = payload.error;
+            state.error = Object.assign({}, state.error, payload.error);
+        },
+        saveUser: (state, payload) => {
+            state.user = Object.assign({}, state.user, payload);
         }
     },
     actions: {
-        login: (context) => {
-            context.commit('saveToken', {token: "token"});
-            console.log('login action');
+        login: async (context, data) => {
+            const result = await loginAction(data.email, data.password).catch((error) => {
+                context.commit('saveError', {error: error});
+            });
+            if (result) {
+                context.commit('saveUser', result);
+                router.push('home')
+            }
+            console.log(result);
         },
         signUp: async (context, data) => {
             const result = await signUpAction(data.email, data.password, data.repeatPassword).catch((error) => {
-                context.commit('saveError', {error: error})
+                context.commit('saveError', {error: error});
             });
+            if (result) {
+                context.commit('saveUser', result);
+                router.push('home')
+            }
+            console.log(result);
+        },
+        loginWithGoogle: async (context) => {
+            const result = await loginWithGoogleAction().catch((error) => {
+                context.commit('saveError', {error: error});
+            });
+            if (result) {
+                context.commit('saveUser', result);
+                router.push('home')
+            }
             console.log(result);
         }
     },

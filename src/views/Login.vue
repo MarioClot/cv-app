@@ -14,10 +14,10 @@
                                            label="Password" :error="false"></generic-input>
                             <div class="social-login">
                                 <generic-button icon="facebook" type="white">Facebook</generic-button>
-                                <generic-button icon="google" type="white">Google</generic-button>
+                                <generic-button icon="google" type="white" :on-click="() => loginWithGoogle()">Google</generic-button>
                             </div>
                             <div class="login-button">
-                                <generic-button :on-click="() => login(email, password)">Sign in</generic-button>
+                                <generic-button :on-click="() => login({email, password})">Sign in</generic-button>
                             </div>
                         </generic-form>
                     </div>
@@ -44,7 +44,8 @@
         },
         methods: {
             ...mapActions({
-                login: 'oauth/login'
+                login: 'oauth/login',
+                loginWithGoogle: 'oauth/loginWithGoogle'
             }),
         }
     }
