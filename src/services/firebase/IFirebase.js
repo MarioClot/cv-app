@@ -3,9 +3,7 @@ import 'reflect-metadata';
 
 @injectable()
 class IFirebase {
-    constructor() {
 
-    }
 }
 
 IFirebase.prototype.login = () => {
@@ -15,7 +13,6 @@ IFirebase.prototype.login = () => {
 IFirebase.prototype.signUp = () => {
     throw new Error('Cannot call an interface method');
 };
-
 
 IFirebase.prototype.loginWithGoogle = () => {
     throw new Error('Cannot call an interface method');

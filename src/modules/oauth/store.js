@@ -6,8 +6,8 @@ import loginWithGoogleAction from "./actions/login-with-google-action";
 export const oauth = {
     namespaced: true,
     state: {
-        error: Error,
-        user: {}
+        error: undefined,
+        user: undefined
     },
     mutations: {
         saveError: (state, payload) => {
@@ -23,7 +23,7 @@ export const oauth = {
                 context.commit('saveError', {error: error});
             });
             if (result) {
-                context.commit('saveUser', result);
+                await context.commit('saveUser', result);
                 router.push('home')
             }
             console.log(result);
@@ -33,7 +33,7 @@ export const oauth = {
                 context.commit('saveError', {error: error});
             });
             if (result) {
-                context.commit('saveUser', result);
+                await context.commit('saveUser', result);
                 router.push('home')
             }
             console.log(result);
@@ -43,7 +43,7 @@ export const oauth = {
                 context.commit('saveError', {error: error});
             });
             if (result) {
-                context.commit('saveUser', result);
+                await context.commit('saveUser', result);
                 router.push('home')
             }
             console.log(result);

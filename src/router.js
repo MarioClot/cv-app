@@ -25,10 +25,10 @@ export default new Router({
       name: 'home',
       component: () => import('./views/Home.vue'),
       beforeEnter: (to, from, next) => {
-        if (store.state.oauth.user.email) {
-          next();
+        if (!store.state.oauth.user.email) {
+          next('/');
         }
-        next('/');
+        next();
       }
     }
   ]
